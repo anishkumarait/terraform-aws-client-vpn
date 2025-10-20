@@ -5,9 +5,8 @@ Terraform module for provisioning an AWS Client VPN
 
 ```hcl
 module "client_vpn" {
-  source  = "anishkumarait/aws-client-vpn"
-  version = "1.X.X"
-
+  source  = "anishkumarait/client-vpn/aws"
+  version = "x.x.x"
 }
 ```
 
