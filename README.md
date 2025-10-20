@@ -16,7 +16,6 @@ module "client_vpn" {
 * [client-vpn](https://github.com/anishkumarait/terraform-aws-client-vpn/tree/main/examples/)
 
 <!-- BEGIN_TF_DOCS -->
-
 ## Requirements
 
 | Name | Version |
@@ -38,7 +37,6 @@ No modules.
 
 | Name | Type |
 |------|------|
-| [aws_ec2_client_vpn_authorization_rule.this](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/ec2_client_vpn_authorization_rule) | resource |
 | [aws_ec2_client_vpn_endpoint.this](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/ec2_client_vpn_endpoint) | resource |
 | [aws_ec2_client_vpn_network_association.this](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/ec2_client_vpn_network_association) | resource |
 | [aws_ec2_client_vpn_route.this](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/ec2_client_vpn_route) | resource |
@@ -87,7 +85,6 @@ No modules.
 | <a name="output_client_vpn_route_origins"></a> [client\_vpn\_route\_origins](#output\_client\_vpn\_route\_origins) | A map of route key to the origin type of the Client VPN route. Typically 'add-route' for manually added routes. |
 | <a name="output_client_vpn_route_types"></a> [client\_vpn\_route\_types](#output\_client\_vpn\_route\_types) | A map of route key to the route type of the Client VPN route. |
 | <a name="output_client_vpn_self_service_portal_url"></a> [client\_vpn\_self\_service\_portal\_url](#output\_client\_vpn\_self\_service\_portal\_url) | The URL of the self-service portal for the Client VPN endpoint. |
-
 <!-- END_TF_DOCS -->
 
 ## License
