@@ -14,3 +14,5 @@ module "client_vpn" {
 ## Examples
 
 * [client-vpn](https://github.com/anishkumarait/terraform-aws-client-vpn/tree/main/examples/)
+
+<!-- BEGIN_TF_DOCS -->
