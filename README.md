@@ -9,6 +9,7 @@ module "client_vpn" {
   version = "x.x.x"
 }
 ```
+### Terraform Registry - https://registry.terraform.io/modules/anishkumarait/client-vpn/aws/latest
 
 ## Examples
 
