@@ -1,5 +1,5 @@
 terraform {
-  required_version = ">= 1.3.0"
+  required_version = ">= 1.6.0"
 
   required_providers {
     aws = {
@@ -16,30 +16,41 @@ provider "aws" {
 module "client_vpn" {
   source                 = "../"
   name                   = "test-vpn"
-  server_certificate_arn = "arn:aws:acm:us-east-1:1234567890:certificate/xxxxxxxxxx" # certificate ARN
-  client_cidr_block      = "xxx.xxx.xxx.xxx/xx"                                      # CIDR range for client connection
+  server_certificate_arn = "arn:aws:acm:us-east-1:123456789:certificate/8bd9c28f-2a4c-xxxxxx" # certificate ARN
+  client_cidr_block      = "xxx.xxx.xxx.xxx/xx"                                               # CIDR range for client connection
 
   authentication_options = [
     {
       type              = "federated-authentication"
-      saml_provider_arn = "arn:aws:iam::1234567890:saml-provider/Client-VPN"
+      saml_provider_arn = "arn:aws:iam::1234567890:saml-provider/client-vpn"
     }
   ]
 
-  connection_log_options = {
-    enabled               = true
-    cloudwatch_log_group  = "test"
-    cloudwatch_log_stream = "test"
-  }
-
-  subnet_ids = ["subnet-xxx", "subnet-xxx"]
-  vpc_id     = "vpc-xxx"
+  log_group_name  = "test"
+  log_stream_name = "test"
+  subnet_ids      = ["subnet-xxx", "subnet-xxx"]
+  vpc_id          = "vpc-xxx"
 
   authorization_rules = [
     {
+      cidr                 = "xxx.xxx.xxx.xxx/xx" # VPC CIDR where VPN is created
+      description          = "Source VPC CIDR"
+      authorize_all_groups = true
+    },
+    # Additional VPCs where traffic will be routes
+    {
       cidr                 = "xxx.xxx.xxx.xxx/xx"
-      description          = "VPC CIDR"
+      description          = "Additional VPC CIDR"
       authorize_all_groups = true
     }
   ]
+
+  route_definitions = [
+    #  Additional VPCs where traffic will be routes
+    {
+      cidr        = "xxx.xxx.xxx.xxx/xx"
+      description = "Additionl VPC CIDR"
+    }
+  ]
+
 }

@@ -19,7 +19,7 @@ module "client_vpn" {
 
 | Name | Version |
 |------|---------|
-| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.3.0 |
+| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.6.0 |
 | <a name="requirement_aws"></a> [aws](#requirement\_aws) | >= 6.0 |
 
 ## Providers
@@ -36,6 +36,9 @@ No modules.
 
 | Name | Type |
 |------|------|
+| [aws_cloudwatch_log_group.this](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/cloudwatch_log_group) | resource |
+| [aws_cloudwatch_log_stream.this](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/cloudwatch_log_stream) | resource |
+| [aws_ec2_client_vpn_authorization_rule.this](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/ec2_client_vpn_authorization_rule) | resource |
 | [aws_ec2_client_vpn_endpoint.this](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/ec2_client_vpn_endpoint) | resource |
 | [aws_ec2_client_vpn_network_association.this](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/ec2_client_vpn_network_association) | resource |
 | [aws_ec2_client_vpn_route.this](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/ec2_client_vpn_route) | resource |
@@ -50,18 +53,25 @@ No modules.
 | <a name="input_client_connect_options"></a> [client\_connect\_options](#input\_client\_connect\_options) | Client connect options for managing connection authorization for new client connections. | <pre>object({<br/>    enabled             = bool<br/>    lambda_function_arn = optional(string)<br/>  })</pre> | <pre>{<br/>  "enabled": false,<br/>  "lambda_function_arn": null<br/>}</pre> | no |
 | <a name="input_client_login_banner_options"></a> [client\_login\_banner\_options](#input\_client\_login\_banner\_options) | Client login banner options. | <pre>object({<br/>    enabled     = bool<br/>    banner_text = optional(string)<br/>  })</pre> | <pre>{<br/>  "banner_text": null,<br/>  "enabled": false<br/>}</pre> | no |
 | <a name="input_client_route_enforcement_options"></a> [client\_route\_enforcement\_options](#input\_client\_route\_enforcement\_options) | Options to enforce administrator-defined routes on connected clients | <pre>object({<br/>    enforced = bool<br/>  })</pre> | <pre>{<br/>  "enforced": false<br/>}</pre> | no |
-| <a name="input_connection_log_options"></a> [connection\_log\_options](#input\_connection\_log\_options) | Configuration block for connection logging. | <pre>object({<br/>    enabled               = bool<br/>    cloudwatch_log_group  = optional(string)<br/>    cloudwatch_log_stream = optional(string)<br/>  })</pre> | n/a | yes |
+| <a name="input_connection_log_options"></a> [connection\_log\_options](#input\_connection\_log\_options) | Configuration block for connection logging. | <pre>object({<br/>    enabled               = bool<br/>    cloudwatch_log_group  = optional(string)<br/>    cloudwatch_log_stream = optional(string)<br/>  })</pre> | <pre>{<br/>  "enabled": true<br/>}</pre> | no |
 | <a name="input_description"></a> [description](#input\_description) | Description for the Client VPN endpoint. | `string` | `null` | no |
 | <a name="input_disconnect_on_session_timeout"></a> [disconnect\_on\_session\_timeout](#input\_disconnect\_on\_session\_timeout) | Whether to disconnect the client VPN session after the maximum session\_timeout\_hours is reached. | `bool` | `false` | no |
 | <a name="input_dns_servers"></a> [dns\_servers](#input\_dns\_servers) | Custom DNS servers to use. Can specify up to two. | `list(string)` | `[]` | no |
 | <a name="input_endpoint_ip_address_type"></a> [endpoint\_ip\_address\_type](#input\_endpoint\_ip\_address\_type) | IP address type for the Client VPN endpoint. Valid values: ipv4, ipv6, dual-stack. | `string` | `"ipv4"` | no |
+| <a name="input_kms_key_id"></a> [kms\_key\_id](#input\_kms\_key\_id) | KMS key ARN to encrypt the logs. | `string` | `null` | no |
+| <a name="input_log_group_class"></a> [log\_group\_class](#input\_log\_group\_class) | Log class of the log group. | `string` | `"STANDARD"` | no |
+| <a name="input_log_group_name"></a> [log\_group\_name](#input\_log\_group\_name) | Name of the CloudWatch log group. | `string` | `null` | no |
+| <a name="input_log_stream_name"></a> [log\_stream\_name](#input\_log\_stream\_name) | Name of the CloudWatch log stream. | `string` | `null` | no |
 | <a name="input_name"></a> [name](#input\_name) | Name tag for the Client VPN endpoint. | `string` | `null` | no |
+| <a name="input_name_prefix"></a> [name\_prefix](#input\_name\_prefix) | Prefix name for the CloudWatch log group. | `string` | `null` | no |
 | <a name="input_region"></a> [region](#input\_region) | AWS region where this resource will be created. | `string` | `null` | no |
+| <a name="input_retention_in_days"></a> [retention\_in\_days](#input\_retention\_in\_days) | Number of days to retain log events in the log group. | `number` | `0` | no |
 | <a name="input_route_definitions"></a> [route\_definitions](#input\_route\_definitions) | List of CIDRs to create VPN routes for. | <pre>list(object({<br/>    cidr        = string<br/>    description = optional(string)<br/>  }))</pre> | `[]` | no |
 | <a name="input_security_group_ids"></a> [security\_group\_ids](#input\_security\_group\_ids) | List of security group IDs to associate with the Client VPN endpoint. | `list(string)` | `[]` | no |
 | <a name="input_self_service_portal"></a> [self\_service\_portal](#input\_self\_service\_portal) | Enable or disable the self-service portal. Valid values: enabled, disabled. | `string` | `"disabled"` | no |
 | <a name="input_server_certificate_arn"></a> [server\_certificate\_arn](#input\_server\_certificate\_arn) | The ARN of the ACM server certificate for the Client VPN endpoint. | `string` | n/a | yes |
 | <a name="input_session_timeout_hours"></a> [session\_timeout\_hours](#input\_session\_timeout\_hours) | Maximum session duration in hours. Valid values: 8, 10, 12, 24. | `number` | `24` | no |
+| <a name="input_skip_destroy"></a> [skip\_destroy](#input\_skip\_destroy) | Whether to destroy the log group when resource is destroyed. | `bool` | `false` | no |
 | <a name="input_split_tunnel"></a> [split\_tunnel](#input\_split\_tunnel) | Whether split-tunnel is enabled. | `bool` | `false` | no |
 | <a name="input_subnet_ids"></a> [subnet\_ids](#input\_subnet\_ids) | List of subnet IDs to associate with the Client VPN endpoint for high availability. | `list(string)` | n/a | yes |
 | <a name="input_tags"></a> [tags](#input\_tags) | Map of tags to assign to the Client VPN endpoint. | `map(string)` | `{}` | no |

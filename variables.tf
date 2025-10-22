@@ -1,6 +1,11 @@
 #########################
 # Required Variables
 #########################
+variable "region" {
+  description = "AWS region where this resource will be created."
+  type        = string
+  default     = null
+}
 
 variable "name" {
   description = "Name tag for the Client VPN endpoint."
@@ -8,8 +13,14 @@ variable "name" {
   default     = null
 }
 
-variable "region" {
-  description = "AWS region where this resource will be created."
+variable "log_group_name" {
+  description = "Name of the CloudWatch log group."
+  type        = string
+  default     = null
+}
+
+variable "log_stream_name" {
+  description = "Name of the CloudWatch log stream."
   type        = string
   default     = null
 }
@@ -37,6 +48,9 @@ variable "connection_log_options" {
     cloudwatch_log_group  = optional(string)
     cloudwatch_log_stream = optional(string)
   })
+  default = {
+    enabled = true
+  }
 }
 
 variable "vpc_id" {
@@ -184,4 +198,34 @@ variable "authorization_rules" {
     authorize_all_groups = optional(bool)
   }))
   default = []
+}
+
+variable "name_prefix" {
+  description = "Prefix name for the CloudWatch log group."
+  type        = string
+  default     = null
+}
+
+variable "skip_destroy" {
+  description = "Whether to destroy the log group when resource is destroyed."
+  type        = bool
+  default     = false
+}
+
+variable "log_group_class" {
+  description = "Log class of the log group."
+  type        = string
+  default     = "STANDARD"
+}
+
+variable "retention_in_days" {
+  description = "Number of days to retain log events in the log group."
+  type        = number
+  default     = 0
+}
+
+variable "kms_key_id" {
+  description = "KMS key ARN to encrypt the logs."
+  type        = string
+  default     = null
 }

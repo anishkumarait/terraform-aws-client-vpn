@@ -20,8 +20,8 @@ resource "aws_ec2_client_vpn_endpoint" "this" {
     for_each = var.connection_log_options.enabled ? [var.connection_log_options] : []
     content {
       enabled               = connection_log_options.value.enabled
-      cloudwatch_log_group  = connection_log_options.value.cloudwatch_log_group
-      cloudwatch_log_stream = connection_log_options.value.cloudwatch_log_stream
+      cloudwatch_log_group  = connection_log_options.value.cloudwatch_log_group == null ? aws_cloudwatch_log_group.this[0].name : connection_log_options.value.cloudwatch_log_group
+      cloudwatch_log_stream = connection_log_options.value.cloudwatch_log_stream == null ? var.log_stream_name : connection_log_options.value.cloudwatch_log_stream
     }
   }
 
