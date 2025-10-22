@@ -16,8 +16,8 @@ provider "aws" {
 module "client_vpn" {
   source                 = "../"
   name                   = "test-vpn"
-  server_certificate_arn = "arn:aws:acm:ap-southeast-1:123456789:certificate/8bd9c28f-2a4c-xxxxxx" # certificate ARN
-  client_cidr_block      = "xxx.xxx.xxx.xxx/xx"                                                    # CIDR range for client connection
+  server_certificate_arn = "arn:aws:acm:us-east-1:123456789:certificate/8bd9c28f-2a4c-xxxxxx" # certificate ARN
+  client_cidr_block      = "xxx.xxx.xxx.xxx/xx"                                               # CIDR range for client connection
 
   authentication_options = [
     {
